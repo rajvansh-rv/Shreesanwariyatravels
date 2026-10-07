@@ -1,0 +1,7 @@
+# Robots.txt for Shree Sanwariya Travels (https://shreesanwariyatravels.in/)
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /#admin
+
+Sitemap: https://shreesanwariyatravels.in/sitemap.xml

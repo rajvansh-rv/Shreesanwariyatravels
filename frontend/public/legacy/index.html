@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shree Sanwariya Travels – Explore India</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cinzel:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════
+       LOADER
+  ══════════════════════════════════════════ -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <img src="./img/logo.jpg" alt="Logo" class="loader-om" />
+        <p class="loader-name">Shree Sanwariya Travels</p>
+      </div>
+      <div class="loader-bar">
+        <div class="loader-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CUSTOM CURSOR
+  ══════════════════════════════════════════ -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <img src="./img/logo.jpg" alt="Logo" class="logo-icon" />
+      <div>
+        <span class="logo-main">Shree Sanwariya</span>
+        <span class="logo-sub">Travels</span>
+      </div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero" class="nav-link">Home</a></li>
+      <li><a href="#destinations" class="nav-link">Destinations</a></li>
+      <li><a href="#cars" class="nav-link">Fleet</a></li>
+      <li><a href="#reviews" class="nav-link">Reviews</a></li>
+      <li><a href="#book" class="nav-link nav-cta">Book Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════════ -->
+  <section id="hero">
+    <!-- Animated gradient orbs background -->
+    <div class="hero-bg">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+      <div class="hero-grid"></div>
+    </div>
+
+    <!-- Floating landscape silhouette -->
+    <div class="hero-mountain"></div>
+
+    <div class="hero-content">
+      <p class="hero-badge reveal-up">✦ India's Trusted Travel Partner ✦</p>
+      <h1 class="hero-title reveal-up">
+        <span class="title-line">Explore</span>
+        <span class="title-line title-accent">Incredible India</span>
+        <span class="title-line">with Us</span>
+      </h1>
+      <p class="hero-sub reveal-up">
+        Premium journeys across India. Comfort, safety & unforgettable memories — crafted for every
+        traveller.
+      </p>
+      <div class="hero-btns reveal-up">
+        <a href="#book" class="btn-primary">
+          <span>Book Your Journey</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="#destinations" class="btn-ghost">
+          <i class="fa-solid fa-compass"></i>
+          <span>Explore Destinations</span>
+        </a>
+      </div>
+      <div class="hero-stats reveal-up">
+        <div class="stat"><strong>12K+</strong><span>Happy Travellers</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>8+</strong><span>Years Experience</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>50+</strong><span>Destinations</span></div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       MARQUEE STRIP
+  ══════════════════════════════════════════ -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>✦ Shri Mahakaleshwar Jyotirlinga </span><span>✦ Omkareshwar</span><span>✦ Baglamukhi</span>
+      <span>✦ Sanwariya Seth </span><span>✦ Khatu Shyam</span><span>✦ Jaipur</span>
+      <span>✦ Udaipur</span><span>✦ Salasar Balaji</span><span>✦ Rishikesh</span>
+      <span>✦ Chittorgarh</span> <span>✦ Bhopal</span>
+      <span>✦ Goa</span> <span>✦ Kerala</span>
+      <span>✦ Somnath</span><span>✦ Kedarnath</span>
+     
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       DESTINATIONS SECTION
+  ══════════════════════════════════════════ -->
+  <section id="destinations" class="section">
+    <div class="section-header reveal-up">
+      <p class="section-label">Where do you want to go?</p>
+      <h2 class="section-title">Popular <em>Destinations</em></h2>
+      <p class="section-desc">Eight iconic Indian escapes — handpicked for their beauty, culture, and adventure.</p>
+    </div>
+
+    <div class="dest-grid">
+
+      <!-- mahakaleshwar -->
+      <div class="dest-card reveal-card" style="--i:0">
+        <div class="dest-img-wrap">
+          <img src="./img/mahakaltemple.jpg" alt="Mahakaleshwar Ujjain"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Madhya Pradesh</span>
+        </div>
+        <div class="dest-body">
+          <h3>Shri Mahakaleshwar Jyotirlinga, Ujjain</h3>
+          <p>The divine abode of Mahakal, stands as one of the most sacred Shiva temples in India.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-temperature-low"></i> 21°C – 41°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Omkareshwar Jyotirlinga -->
+      <div class="dest-card reveal-card" style="--i:1">
+        <div class="dest-img-wrap">
+          <img src="./img/omtemple.jpg" alt="Omkareshwar jyotirlinga" loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Madhya Pradesh</span>
+        </div>
+        <div class="dest-body">
+          <h3>Omkareshwar Jyotirlinga</h3>
+          <p>Omkareshwar is one of India’s twelve sacred Jyotirlinga shrines dedicated to Lord Shiva.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-sun"></i> 19°C – 35°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- baglamukhi Mandir Nalkheda -->
+      <div class="dest-card reveal-card" style="--i:2">
+        <div class="dest-img-wrap">
+          <img src="./img/baglatemple.jpg" alt="baglamukhi Mandir Nalkheda" loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Madhya Pradesh</span>
+        </div>
+        <div class="dest-body">
+          <h3>Baglamukhi Mandir Nalkheda</h3>
+          <p>A revered Siddha Peeth located on the banks of the Lakhundar River, having yellow-themed rituals.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-sun"></i> 22°C – 40°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sanwariya Seth -->
+      <div class="dest-card reveal-card" style="--i:3">
+        <div class="dest-img-wrap">
+          <img src="./img/sawariyatemple.jpg" alt="Sanwariya Seth Mandir"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Rajasthan</span>
+        </div>
+        <div class="dest-body">
+          <h3>Sanwariya Seth</h3>
+          <p>Lord Krishna, who is worshipped here as a "divine businessman" believed to bring prosperity and fulfill the wishes of his devotees.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-leaf"></i> 22°C – 42°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Khatu shyam baba -->
+      <div class="dest-card reveal-card" style="--i:4">
+        <div class="dest-img-wrap">
+          <img src="./img/khatutemple.jpg" alt="Khatu shyam baba"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Rajasthan</span>
+        </div>
+        <div class="dest-body">
+          <h3>Khatu Shyam</h3>
+          <p>Lord Krishna, worshipped as the "Hare Ka Sahara" and believed to grant divine peace to devotees</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-mountain"></i> 19°C – 42°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jaipur -->
+      <div class="dest-card reveal-card" style="--i:5">
+        <div class="dest-img-wrap">
+          <img src="./img/jaipur.jpg" alt="Jaipur"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Rajasthan</span>
+        </div>
+        <div class="dest-body">
+          <h3>Jaipur</h3>
+          <p>The Pink City dazzles with majestic forts, royal palaces, and vibrant bazaars at every turn.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-water"></i> 18°C – 40°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Udaipur -->
+      <div class="dest-card reveal-card" style="--i:6">
+        <div class="dest-img-wrap">
+          <img src="./img/udaipur.jpg" alt="Udaipur"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Rajasthan</span>
+        </div>
+        <div class="dest-body">
+          <h3>Udaipur</h3>
+          <p>City of Lakes — floating palaces, romantic sunsets, and timeless Rajputana architecture.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-droplet"></i> 19°C – 41°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rishikesh -->
+      <div class="dest-card reveal-card" style="--i:7">
+        <div class="dest-img-wrap">
+          <img src="./img/rishikesh.jpg" alt="Rishikesh"
+            loading="lazy" />
+          <div class="dest-overlay"></div>
+          <span class="dest-tag">Uttarakhand</span>
+        </div>
+        <div class="dest-body">
+          <h3>Rishikesh</h3>
+          <p>Yoga capital of the world — Ganges ghats, white-water rafting, and spiritual serenity.</p>
+          <div class="dest-footer">
+            <span><i class="fa-solid fa-snowflake"></i> 26°C – 35°C</span>
+            <a href="#book" class="dest-btn">Explore <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       CAR COLLECTION SECTION
+  ══════════════════════════════════════════ -->
+  <section id="cars" class="section section-dark">
+    <div class="section-header reveal-up">
+      <p class="section-label">Travel in comfort</p>
+      <h2 class="section-title">Our Premium <em>Fleet</em></h2>
+      <p class="section-desc">Clean, well-maintained vehicles driven by professional, verified drivers.</p>
+    </div>
+
+    <div class="cars-grid">
+
+      <div class="car-card reveal-card" style="--i:0">
+        <div class="car-img-wrap">
+          <img
+            src="./img/swifttcar.jpg"
+            alt="Swift" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Maruti Swift</h3>
+          <p>Perfect for city rides and short trips. Fuel-efficient and agile.</p>
+          <div class="car-price">
+            <span class="price-tag">₹11<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:1">
+        <div class="car-img-wrap">
+          <img
+            src="./img/dzsirecar.jpg"
+            alt="Dzire" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Maruti Dzire</h3>
+          <p>Elegant sedan with spacious interiors — ideal for family outings.</p>
+          <div class="car-price">
+            <span class="price-tag">₹11<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:2">
+        <div class="car-img-wrap">
+          <img
+            src="./img/i20car.jpg"
+            alt="Innova" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Hyundai I20 (diesel)</h3>
+          <p>A premium 5-seater hatchback known for its stylish design.</p>
+          <div class="car-price">
+            <span class="price-tag">₹14<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:3">
+        <div class="car-img-wrap">
+          <img
+            src="./img/auraxar.jpg"
+            alt="Fortuner" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Hyundai Aura</h3>
+          <p>A stylish, feature-packed subcompact sedan designed car</p>
+          <div class="car-price">
+            <span class="price-tag">₹11<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:4">
+        <div class="car-img-wrap">
+          <img
+            src="./img/amazecarr.jpg"
+            alt="Honda Amaze" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Honda Amaze</h3>
+          <p>Compact sedan, 420-litre boot capacity, and comfortable ride.</p>
+          <div class="car-price">
+            <span class="price-tag">₹14<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:5">
+        <div class="car-img-wrap">
+          <img
+            src="./img/ertiga.jpg"
+            alt="Ertiga" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Maruti Ertiga</h3>
+          <p>7-seater MPV with excellent fuel efficiency for long family drives.</p>
+          <div class="car-price">
+            <span class="price-tag">₹13<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:6">
+        <div class="car-img-wrap">
+          <img
+            src="./img/crystacar.jpg"
+            alt="Toyota Crysta" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Innova Crysta</h3>
+          <p>Rugged and powerful — built to handle every Indian road condition.</p>
+          <div class="car-price">
+            <span class="price-tag">₹19<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:7">
+        <div class="car-img-wrap">
+          <img
+            src="./img/kiacar.jpg"
+            alt="KIA Carens" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Kia Carens</h3>
+          <p>Modern 7-seater MPV with plush interiors and panoramic sunroof.</p>
+          <div class="car-price">
+            <span class="price-tag">₹15<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:8">
+        <div class="car-img-wrap">
+          <img
+            src="./img/toofancar.jpg"
+            alt="Toofan" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Force Toofan</h3>
+          <p>A robust 11+D seater multi-utility vehicle (MUV).</p>
+          <div class="car-price">
+            <span class="price-tag">₹17<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="car-card reveal-card" style="--i:9">
+        <div class="car-img-wrap">
+          <img
+            src="./img/traveller.jpg"
+            alt="Traveller" loading="lazy" />
+          <div class="car-glow"></div>
+        </div>
+        <div class="car-body">
+          <h3>Traveller 15/22 seater</h3>
+          <p>a versatile light commercial vehicle (LCV) and minibus.</p>
+          <div class="car-price">
+            <span class="price-tag">₹25/28<small>/km (AC)</small></span>
+            <a href="#book" class="car-btn">Book <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       WHY CHOOSE US
+  ══════════════════════════════════════════ -->
+  <section id="why" class="section">
+    <div class="section-header reveal-up">
+      <p class="section-label">Why thousands trust us</p>
+      <h2 class="section-title">The Sanwariya <em>Promise</em></h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal-card" style="--i:0">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>100% Safe & Verified</h3>
+        <p>All drivers are background-checked, licensed, and trained in first aid for your safety.</p>
+      </div>
+      <div class="feature-card reveal-card" style="--i:1">
+        <div class="feature-icon"><i class="fa-solid fa-clock"></i></div>
+        <h3>24/7 Support</h3>
+        <p>Round-the-clock customer support. We're always just a call away during your journey.</p>
+      </div>
+      <div class="feature-card reveal-card" style="--i:2">
+        <div class="feature-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        <h3>Best Price Guarantee</h3>
+        <p>Transparent pricing with no hidden charges. We match any comparable quote — guaranteed.</p>
+      </div>
+      <div class="feature-card reveal-card" style="--i:3">
+        <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+        <h3>Premium Experience</h3>
+        <p>Spotless vehicles, professional drivers, and curated itineraries for every trip.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       REVIEWS SECTION
+  ══════════════════════════════════════════ -->
+  <section id="reviews" class="section section-dark">
+    <div class="section-header reveal-up">
+      <p class="section-label">Real stories from real travellers</p>
+      <h2 class="section-title">What Our Guests <em>Say</em></h2>
+    </div>
+
+    <div class="reviews-slider-wrap reveal-up">
+      <div class="reviews-slider" id="reviewSlider">
+
+        <div class="review-card active">
+          <div class="review-top">
+            <div class="reviewer-avatar">RS</div>
+            <div>
+              <strong>Rajesh Sharma</strong>
+              <span>Ujjain → Bhopal</span>
+            </div>
+          </div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Absolutely incredible experience! The Ertiga was spotless, driver Ramesh bhaiya was super knowledgeable
+            about all routes. We reached safely and on time. Will definitely book again for other trip!"</p>
+          <span class="review-date">February 2025</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer-avatar">PM</div>
+            <div>
+              <strong>Priya Malhotra</strong>
+              <span>Indore → rajasthan</span>
+            </div>
+          </div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Booked a Crysta for our family trip to Rajasthan. The booking process was smooth, the car was like new, and
+            the driver was professional throughout. Shree Sanwariya Travels exceeded our expectations!"</p>
+          <span class="review-date">January 2025</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer-avatar">AK</div>
+            <div>
+              <strong>Amit Kumar</strong>
+              <span>Ujjain → Delhi</span>
+            </div>
+          </div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <p>"Great service at a very fair price.Our group of 5 was very comfortable. The only suggestion — maybe add some snack stops in the package!"</p>
+          <span class="review-date">March 2025</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer-avatar">SJ</div>
+            <div>
+              <strong>Sunita Joshi</strong>
+              <span>Indore → Rajasthan</span>
+            </div>
+          </div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"My in-laws loved the Rajasthan trip we planned through Shree Sanwariya Travels. The driver knew every
+            hidden gem between Jaipur and Udaipur. Truly a royal experience at a budget-friendly price!"</p>
+          <span class="review-date">December 2024</span>
+        </div>
+
+        <div class="review-card">
+          <div class="review-top">
+            <div class="reviewer-avatar">VT</div>
+            <div>
+              <strong>Vikram Tiwari</strong>
+              <span>Ujjain → Mumbai</span>
+            </div>
+          </div>
+          <div class="stars">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p>"Wonderful trip to Mumbai! The Carens was super comfortable for our 5-day journey. Customer support
+            responded instantly whenever we had a query. Highly recommend for anyone planning Indian trips!"</p>
+          <span class="review-date">May 2024</span>
+        </div>
+
+      </div>
+
+      <!-- Slider controls -->
+      <div class="slider-controls">
+        <button class="slider-btn" id="prevBtn" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="slider-dots" id="sliderDots"></div>
+        <button class="slider-btn" id="nextBtn" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BOOK NOW SECTION
+  ══════════════════════════════════════════ -->
+  <section id="book" class="section">
+    <div class="book-wrap">
+      <div class="book-left reveal-up">
+        <p class="section-label">Ready to journey?</p>
+        <h2 class="section-title">Book Your <em>Trip Now</em></h2>
+        <p class="book-desc">Fill in the details and our travel expert will call you within 30 minutes to confirm your
+          booking.</p>
+        <ul class="book-perks">
+          <li><i class="fa-solid fa-check-circle"></i> 10% Discount on 10 Days Pre-Booking</li>
+          <li><i class="fa-solid fa-check-circle"></i> No booking fee</li>
+          <li><i class="fa-solid fa-check-circle"></i> Free cancellation up to 24 hrs</li>
+          <li><i class="fa-solid fa-check-circle"></i> Instant confirmation</li>
+          <li><i class="fa-solid fa-check-circle"></i> 24/7 driver support</li>
+        </ul>
+        <div class="contact-chips">
+          <a href="tel:+919893330713" class="chip"><i class="fa-solid fa-phone"></i> +91 98933 30713</a>
+          <a href="https://wa.me/919893330713" class="chip chip-green" target="_blank"><i
+              class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="book-right reveal-up">
+        <form id="bookingForm" class="booking-form" novalidate>
+          <div class="form-group">
+            <label for="name">Full Name <span>*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" id="name" placeholder="Your full name" autocomplete="off" />
+            </div>
+            <span class="err-msg" id="nameErr"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number <span>*</span></label>
+            <div class="input-wrap">
+              <i class="fa-solid fa-phone"></i>
+              <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX" autocomplete="off" />
+            </div>
+            <span class="err-msg" id="phoneErr"></span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="pickup">Pickup Location <span>*</span></label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-location-dot"></i>
+                <input type="text" id="pickup" placeholder="e.g. Ujjain" autocomplete="off" />
+              </div>
+              <span class="err-msg" id="pickupErr"></span>
+            </div>
+            <div class="form-group">
+              <label for="destination">Destination <span>*</span></label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-map-pin"></i>
+                <input type="text" id="destination" placeholder="e.g. Bhopal" autocomplete="off" />
+              </div>
+              <span class="err-msg" id="destErr"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tdate">Travel Date <span>*</span></label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-calendar"></i>
+                <input type="date" id="tdate" />
+              </div>
+              <span class="err-msg" id="tdateErr"></span>
+            </div>
+            <div class="form-group">
+              <label for="cartype">Preferred Car</label>
+              <div class="input-wrap">
+                <i class="fa-solid fa-car"></i>
+                <select id="cartype">
+                  <option value="">Any / Suggest me</option>
+                  <option>Maruti Swift</option>
+                  <option>Maruti Dzire</option>
+                  <option>Hyundai I20 (D)</option>
+                  <option>Hyundai Aura</option>
+                  <option>Honda amaze</option>
+                  <option>Maruti Ertiga</option>
+                  <option>Innova crysta</option>
+                  <option>Kia Carens</option>
+                  <option>Force Toofan</option>
+                  <option>Traveller 15 seater</option>
+                  <option>Traveller 22 seater</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Special Requests</label>
+            <div class="input-wrap textarea-wrap">
+              <i class="fa-solid fa-message"></i>
+              <textarea id="message" rows="3" placeholder="Any special requirements, stops, or notes..."></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-text">Confirm My Booking</span>
+            <span class="btn-loader" style="display:none"><i class="fa-solid fa-spinner fa-spin"></i></span>
+            <i class="fa-solid fa-paper-plane btn-icon"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       SUCCESS POPUP
+  ══════════════════════════════════════════ -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box">
+      <div class="popup-icon"><i class="fa-solid fa-circle-check"></i></div>
+      <h3>Booking Request Sent! 🎉</h3>
+      <p>Thank you! Our team will call you within <strong>30 minutes</strong> to confirm your booking.</p>
+      <p class="popup-sub">Check WhatsApp for your trip details.</p>
+      <button class="btn-primary popup-close" id="popupClose">
+        <span>Awesome, Thanks!</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="./img/logo.jpg" alt="Logo" class="logo-icon" />
+          <div>
+            <span class="logo-main">Shree Sanwariya</span>
+            <span class="logo-sub">Travels</span>
+          </div>
+        </div>
+        <p>India's trusted travel partner since 2016. We connect hearts to destinations — safely, comfortably, and
+          affordably.</p>
+        <div class="social-links">
+          
+          <a href="https://www.instagram.com/shreesanwariyatravels0713?igsh=MTQyb3c4OG5pdHkxNw==" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://wa.me/919893330713" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#cars">Our Fleet</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#book">Book Now</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Popular Routes</h4>
+        <ul>
+          <li><a href="#book">Ujjain → Sanwariya Seth</a></li>
+          <li><a href="#book">Ujjain → Khatu Shyam</a></li>
+          <li><a href="#book">Ujjain → Rajasthan</a></li>
+          <li><a href="#book">Indore → Mumbai</a></li>
+          <li><a href="#book">Indore → Rishikesh</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <ul class="contact-list">
+          <li><i class="fa-solid fa-phone"></i> <a href="tel:+919893330713">+91 98933 30713</a></li>
+          <li><i class="fa-solid fa-envelope"></i> <a
+              href="mailto:shreesanwariyatravels0713@gmail.com">shreesanwariyatravels0713@gmail.com</a></li>
+          <li><i class="fa-solid fa-location-dot"></i> H35 Hatkeshwar vihar, Nanakheda, Ujjain, MP – 456001</li>
+          <li><i class="fa-solid fa-clock"></i> Open 24 hours, 7 days a week</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>
+  © 2025 Shree Sanwariya Travels. All rights reserved. Developed by 
+  <a href="https://www.linkedin.com/in/rajvansh-singh-atal-2b9635229" target="_blank">
+    <i class="fa-brands fa-linkedin"></i> Rajvansh Singh Atal
+  </a>, India.
+</p>
+                                                         <!-- <i class="fa-solid fa-heart" -->
+                                                          <!-- style="color:#ff6b6b"></i>  -->
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-top" id="backTop" aria-label="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
