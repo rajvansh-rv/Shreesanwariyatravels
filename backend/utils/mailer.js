@@ -47,7 +47,9 @@ function getTransporter() {
     tls: {
       rejectUnauthorized: false
     },
-    family: 4,
+    lookup: (hostname, options, callback) => {
+      return dns.lookup(hostname, { family: 4, all: false }, callback);
+    },
     connectionTimeout: 20000,
     greetingTimeout: 15000,
     socketTimeout: 30000
