@@ -8,8 +8,8 @@ function getEmailConfig() {
   const pass = (process.env.EMAIL_PASS || process.env.SMTP_PASS || process.env.SMTP_PASSWORD || process.env.MAIL_PASS || process.env.GMAIL_PASS || process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, "").trim();
   const adminEmail = (process.env.ADMIN_EMAIL || process.env.MAIL_FROM || process.env.FRIEND_EMAIL || user || "").trim();
   const host = (process.env.EMAIL_HOST || process.env.SMTP_HOST || "smtp.gmail.com").trim();
-  const port = parseInt(process.env.EMAIL_PORT || process.env.SMTP_PORT, 10) || 465;
-  const secure = process.env.EMAIL_SECURE !== "false" && process.env.SMTP_SECURE !== "false" && port === 465;
+  const port = parseInt(process.env.EMAIL_PORT || process.env.SMTP_PORT, 10) || 587;
+  const secure = port === 465 || process.env.EMAIL_SECURE === "true" || process.env.SMTP_SECURE === "true";
 
   return { user, pass, adminEmail, host, port, secure };
 }
