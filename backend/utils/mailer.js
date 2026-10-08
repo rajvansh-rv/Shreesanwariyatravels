@@ -1,14 +1,18 @@
 const nodemailer = require("nodemailer");
 
 /**
- * Clean environment variables (trim accidental spaces/quotes)
+ * Resolve environment variables cleanly with fallback support
  */
-const EMAIL_USER = (process.env.EMAIL_USER || "").trim();
-const EMAIL_PASS = (process.env.EMAIL_PASS || "").replace(/\s+/g, "").trim();
-const ADMIN_EMAIL = (process.env.ADMIN_EMAIL || process.env.FRIEND_EMAIL || EMAIL_USER || "").trim();
-const EMAIL_HOST = (process.env.EMAIL_HOST || "smtp.gmail.com").trim();
-const EMAIL_PORT = parseInt(process.env.EMAIL_PORT, 10) || 465;
-const EMAIL_SECURE = process.env.EMAIL_SECURE !== "false";
+function getEmailConfig() {
+  const user = (process.env.EMAIL_USER || process.env.SMTP_USER || process.env.MAIL_USER || process.env.GMAIL_USER || "").trim();
+  const pass = (process.env.EMAIL_PASS || process.env.SMTP_PASS || process.env.SMTP_PASSWORD || process.env.MAIL_PASS || process.env.GMAIL_PASS || process.env.GMAIL_APP_PASSWORD || "").replace(/\s+/g, "").trim();
+  const adminEmail = (process.env.ADMIN_EMAIL || process.env.MAIL_FROM || process.env.FRIEND_EMAIL || user || "").trim();
+  const host = (process.env.EMAIL_HOST || process.env.SMTP_HOST || "smtp.gmail.com").trim();
+  const port = parseInt(process.env.EMAIL_PORT || process.env.SMTP_PORT, 10) || 465;
+  const secure = process.env.EMAIL_SECURE !== "false" && process.env.SMTP_SECURE !== "false" && port === 465;
+
+  return { user, pass, adminEmail, host, port, secure };
+}
 
 let transporter = null;
 
@@ -20,20 +24,28 @@ function getTransporter() {
     return transporter;
   }
 
-  if (!EMAIL_USER || !EMAIL_PASS) {
+  const config = getEmailConfig();
+
+  if (!config.user || !config.pass) {
     console.warn("[EMAIL] Warning: EMAIL_USER or EMAIL_PASS is not defined in environment variables.");
     return null;
   }
 
   transporter = nodemailer.createTransport({
-    host: EMAIL_HOST,
-    port: EMAIL_PORT,
-    secure: EMAIL_SECURE,
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
     auth: {
-      user: EMAIL_USER,
-      pass: EMAIL_PASS
+      user: config.user,
+      pass: config.pass
     },
-    // Pool connections to avoid opening a new connection for every mail
+    tls: {
+      rejectUnauthorized: false
+    },
+    connectionTimeout: 15000,
+    greetingTimeout: 10000,
+    socketTimeout: 20000,
+    family: 4,
     pool: true,
     maxConnections: 3,
     maxMessages: 50
@@ -46,6 +58,7 @@ function getTransporter() {
  * Verify SMTP connection safely (never leaks passwords)
  */
 async function verifyMailer() {
+  const config = getEmailConfig();
   const mailTransport = getTransporter();
   if (!mailTransport) {
     return {
@@ -57,20 +70,22 @@ async function verifyMailer() {
 
   try {
     await mailTransport.verify();
-    console.log(`[EMAIL] ✅ SMTP Transporter ready. Sending from: ${EMAIL_USER} -> Admin: ${ADMIN_EMAIL}`);
+    console.log(`[EMAIL] ✅ SMTP Transporter ready. Sending from: ${config.user} -> Admin: ${config.adminEmail}`);
     return {
       configured: true,
       connected: true,
-      user: EMAIL_USER,
-      adminEmail: ADMIN_EMAIL
+      user: config.user,
+      adminEmail: config.adminEmail
     };
   } catch (err) {
     console.error(`[EMAIL] ❌ SMTP Verification Error: ${err.message}`);
+    // Invalidate broken transporter so it can retry fresh on next call
+    transporter = null;
     return {
       configured: true,
       connected: false,
-      user: EMAIL_USER,
-      adminEmail: ADMIN_EMAIL,
+      user: config.user,
+      adminEmail: config.adminEmail,
       error: err.message
     };
   }
@@ -231,11 +246,12 @@ async function sendBookingNotificationEmail(booking) {
     </html>
   `;
 
+  const config = getEmailConfig();
   try {
-    console.log(`[EMAIL] Dispatching booking notification email to: ${ADMIN_EMAIL}...`);
+    console.log(`[EMAIL] Dispatching booking notification email to: ${config.adminEmail}...`);
     const info = await mailTransport.sendMail({
-      from: `"Shree Sanwariya Travels" <${EMAIL_USER}>`,
-      to: ADMIN_EMAIL,
+      from: `"Shree Sanwariya Travels" <${config.user}>`,
+      to: config.adminEmail,
       subject: `🚗 New Booking Request: ${booking.name} (${pickupAddr} ➔ ${booking.destination})`,
       text: textContent,
       html: htmlContent
@@ -248,6 +264,7 @@ async function sendBookingNotificationEmail(booking) {
     };
   } catch (err) {
     console.error(`[EMAIL] ❌ Failed to deliver booking email notification: ${err.message}`);
+    transporter = null;
     return {
       success: false,
       error: err.message

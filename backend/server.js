@@ -16,9 +16,36 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5000",
+  "http://localhost:3000",
+  "https://shreesanwariyatravels.in",
+  "https://www.shreesanwariyatravels.in"
+];
+
 const app = express();
 app.use(express.json({ limit: "10kb" }));
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".netlify.app") ||
+        origin.endsWith(".onrender.com") ||
+        origin.includes("localhost") ||
+        origin.includes("127.0.0.1")
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+  })
+);
 
 // ✅ CONNECT TO MONGODB ATLAS
 connectDB();
@@ -108,7 +135,7 @@ app.post("/api/bookings", async (req, res) => {
           : null;
     }
 
-    // Create new booking document in MongoDB Atlas
+    // 1. Create new booking document in MongoDB Atlas
     const newBooking = await Booking.create({
       user: authenticatedUserId,
       name: name.trim(),
@@ -121,17 +148,33 @@ app.post("/api/bookings", async (req, res) => {
       status: "Pending"
     });
 
-    // Send HTTP success response to client immediately (database booking creation is successful)
-    res.status(201).json({
-      success: true,
-      message: "Booking submitted successfully.",
-      bookingId: newBooking._id
-    });
+    // 2. Dispatch Email Notification (Awaited safely so booking remains saved regardless of email status)
+    let emailResult = { success: false };
+    try {
+      emailResult = await sendBookingNotificationEmail(newBooking);
+    } catch (emailErr) {
+      console.error("[EMAIL] Booking notification dispatch error:", emailErr.message);
+      emailResult = { success: false, error: emailErr.message };
+    }
 
-    // Send formatted HTML + Text email notification in the background
-    sendBookingNotificationEmail(newBooking).catch((emailErr) => {
-      console.error("[EMAIL] Unhandled background email dispatch error:", emailErr.message);
-    });
+    // 3. Return accurate response based on outcome
+    if (emailResult.success) {
+      return res.status(201).json({
+        success: true,
+        message: "Booking submitted successfully. Notification email sent.",
+        bookingId: newBooking._id,
+        emailSent: true
+      });
+    } else {
+      console.warn(`[BOOKING] Booking ${newBooking._id} saved in MongoDB, but email failed: ${emailResult.error || "SMTP unavailable"}`);
+      return res.status(201).json({
+        success: true,
+        message: "Booking received and saved successfully. Notification email could not be delivered.",
+        bookingId: newBooking._id,
+        emailSent: false,
+        emailNote: emailResult.error || "Email notification delivery failed"
+      });
+    }
   } catch (error) {
     console.error("MongoDB Booking Creation Error:", error);
     return res.status(500).json({

@@ -60,6 +60,7 @@ export default function Admin() {
   const [reviewSearch, setReviewSearch] = useState("");
   const [reviewStatusFilter, setReviewStatusFilter] = useState("All");
   const [reviewRatingFilter, setReviewRatingFilter] = useState("All");
+  const [reviewSortBy, setReviewSortBy] = useState("newest");
   // Ensure search engines do not index the admin portal
   useEffect(() => {
     const prevTitle = document.title;
