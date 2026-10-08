@@ -38,7 +38,7 @@ function getTransporter() {
 
   transporter = nodemailer.createTransport({
     host: config.host || "smtp.gmail.com",
-    port: config.port || 465,
+    port: config.port || 587,
     secure: config.secure,
     auth: {
       user: config.user,
@@ -48,7 +48,12 @@ function getTransporter() {
       rejectUnauthorized: false
     },
     lookup: (hostname, options, callback) => {
-      return dns.lookup(hostname, { family: 4, all: false }, callback);
+      if (typeof options === "function") {
+        callback = options;
+        options = {};
+      }
+      const opts = Object.assign({}, options, { family: 4 });
+      return dns.lookup(hostname, opts, callback);
     },
     connectionTimeout: 20000,
     greetingTimeout: 15000,
@@ -252,7 +257,7 @@ async function sendBookingNotificationEmail(booking) {
 
   const config = getEmailConfig();
   try {
-    console.log(`[EMAIL] Dispatching booking notification email to: ${config.adminEmail}...`);
+    console.log(`[MAIL] Dispatching booking notification email to: ${config.adminEmail}...`);
     const info = await mailTransport.sendMail({
       from: `"Shree Sanwariya Travels" <${config.user}>`,
       to: config.adminEmail,
@@ -261,13 +266,16 @@ async function sendBookingNotificationEmail(booking) {
       html: htmlContent
     });
 
-    console.log(`[EMAIL] ✅ Booking notification sent successfully! MessageId: ${info.messageId}`);
+    console.log(`[MAIL] ✅ sendMail succeeded. MessageId: ${info.messageId}, Accepted: ${JSON.stringify(info.accepted)}, Response: ${info.response}`);
     return {
       success: true,
-      messageId: info.messageId
+      messageId: info.messageId,
+      accepted: info.accepted,
+      rejected: info.rejected,
+      response: info.response
     };
   } catch (err) {
-    console.error(`[EMAIL] ❌ Failed to deliver booking email notification: ${err.message}`);
+    console.error(`[MAIL] ❌ sendMail failed: ${err.message}`);
     transporter = null;
     return {
       success: false,

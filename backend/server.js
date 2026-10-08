@@ -167,7 +167,10 @@ app.post("/api/bookings", async (req, res) => {
         success: true,
         message: "Booking submitted successfully. Notification email sent.",
         bookingId: newBooking._id,
-        emailSent: true
+        emailSent: true,
+        messageId: emailResult.messageId,
+        accepted: emailResult.accepted,
+        response: emailResult.response
       });
     } else {
       console.warn(`[BOOKING] Booking ${newBooking._id} saved in MongoDB, but email failed: ${emailResult.error || "SMTP unavailable"}`);

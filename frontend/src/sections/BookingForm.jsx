@@ -176,40 +176,46 @@ export default function BookingForm() {
       return;
     }
 
-    setLoading(true);
+    // 1. Construct WhatsApp notification message immediately inside user gesture
+    const waRequest = formData.message.trim() ? formData.message : "None";
+    const waCar = formData.cartype && formData.cartype.trim() ? formData.cartype : "Any / Suggest me";
+    const waLocation = pickupLocation.detected
+      ? `${formData.pickup.trim()} (GPS: https://www.google.com/maps?q=${pickupLocation.latitude},${pickupLocation.longitude})`
+      : formData.pickup.trim();
 
+    const waMessage = `New Booking Request:\nName: ${formData.name}\nPhone: ${formData.phone}\nPickup: ${waLocation}\nDestination: ${formData.destination}\nDate: ${formData.tdate}\nCar: ${waCar}\nRequest: ${waRequest}`;
+    const waUrl = `https://wa.me/919893330713?text=${encodeURIComponent(waMessage)}`;
+
+    // 2. Open WhatsApp immediately on click to prevent popup blockers & lag
     try {
-      // Structured booking payload with pickup address & optional GPS coordinates
-      const payload = {
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        pickup: {
-          address: formData.pickup.trim(),
-          latitude: pickupLocation.latitude,
-          longitude: pickupLocation.longitude
-        },
-        destination: formData.destination.trim(),
-        tdate: formData.tdate,
-        cartype: formData.cartype && formData.cartype.trim() ? formData.cartype : "Any / Suggest me",
-        message: formData.message.trim()
-      };
-
-      await submitBooking(payload);
-
-      // Construct WhatsApp notification message
-      const waRequest = formData.message.trim() ? formData.message : "None";
-      const waCar = formData.cartype && formData.cartype.trim() ? formData.cartype : "Any / Suggest me";
-      const waLocation = pickupLocation.detected
-        ? `${formData.pickup.trim()} (GPS: https://www.google.com/maps?q=${pickupLocation.latitude},${pickupLocation.longitude})`
-        : formData.pickup.trim();
-
-      const waMessage = `New Booking Request:\nName: ${formData.name}\nPhone: ${formData.phone}\nPickup: ${waLocation}\nDestination: ${formData.destination}\nDate: ${formData.tdate}\nCar: ${waCar}\nRequest: ${waRequest}`;
-
-      const waUrl = `https://wa.me/919893330713?text=${encodeURIComponent(waMessage)}`;
       const newWin = window.open(waUrl, "_blank");
       if (!newWin || newWin.closed || typeof newWin.closed === "undefined") {
         window.location.href = waUrl;
       }
+    } catch (popupErr) {
+      window.location.href = waUrl;
+    }
+
+    // 3. Prepare payload for backend API
+    const payload = {
+      name: formData.name.trim(),
+      phone: formData.phone.trim(),
+      pickup: {
+        address: formData.pickup.trim(),
+        latitude: pickupLocation.latitude,
+        longitude: pickupLocation.longitude
+      },
+      destination: formData.destination.trim(),
+      tdate: formData.tdate,
+      cartype: formData.cartype && formData.cartype.trim() ? formData.cartype : "Any / Suggest me",
+      message: formData.message.trim()
+    };
+
+    setLoading(true);
+
+    // 4. Continue backend booking API request independently
+    try {
+      await submitBooking(payload);
 
       setShowPopup(true);
       setFormData({
@@ -233,7 +239,7 @@ export default function BookingForm() {
       });
       setErrors({});
     } catch (err) {
-      setSubmitError(err.message || "An error occurred while sending the booking. Please try again.");
+      setSubmitError(err.message || "An error occurred while saving your booking. Please try again.");
     } finally {
       setLoading(false);
     }
