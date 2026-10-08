@@ -17,14 +17,17 @@ function getEmailConfig() {
 let transporter = null;
 
 /**
- * Initialize reusable Nodemailer Transporter
- */
 const dns = require("dns");
+const util = require("util");
+const lookupAsync = util.promisify(dns.lookup);
+
 if (dns.setDefaultResultOrder) {
   dns.setDefaultResultOrder("ipv4first");
 }
 
-function getTransporter() {
+let cachedIpv4Host = null;
+
+async function getTransporter() {
   if (transporter) {
     return transporter;
   }
@@ -36,8 +39,18 @@ function getTransporter() {
     return null;
   }
 
+  let hostToUse = config.host || "smtp.gmail.com";
+  try {
+    const lookupRes = await lookupAsync(hostToUse, { family: 4 });
+    if (lookupRes && lookupRes.address) {
+      cachedIpv4Host = lookupRes.address;
+    }
+  } catch (dnsErr) {
+    console.warn(`[DNS] IPv4 lookup warning for ${hostToUse}:`, dnsErr.message);
+  }
+
   transporter = nodemailer.createTransport({
-    host: config.host || "smtp.gmail.com",
+    host: cachedIpv4Host || hostToUse,
     port: config.port || 587,
     secure: config.secure,
     auth: {
@@ -45,15 +58,8 @@ function getTransporter() {
       pass: config.pass
     },
     tls: {
+      servername: config.host || "smtp.gmail.com",
       rejectUnauthorized: false
-    },
-    lookup: (hostname, options, callback) => {
-      if (typeof options === "function") {
-        callback = options;
-        options = {};
-      }
-      const opts = Object.assign({}, options, { family: 4 });
-      return dns.lookup(hostname, opts, callback);
     },
     connectionTimeout: 20000,
     greetingTimeout: 15000,
@@ -68,7 +74,7 @@ function getTransporter() {
  */
 async function verifyMailer() {
   const config = getEmailConfig();
-  const mailTransport = getTransporter();
+  const mailTransport = await getTransporter();
   if (!mailTransport) {
     return {
       configured: false,
@@ -105,7 +111,7 @@ async function verifyMailer() {
  * @param {Object} booking - Booking document from MongoDB
  */
 async function sendBookingNotificationEmail(booking) {
-  const mailTransport = getTransporter();
+  const mailTransport = await getTransporter();
   if (!mailTransport) {
     console.warn("[EMAIL] Skipping email dispatch: Transporter not configured.");
     return {
