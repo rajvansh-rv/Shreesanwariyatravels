@@ -27,6 +27,30 @@ if (dns.setDefaultResultOrder) {
 
 let cachedIpv4Host = null;
 
+async function resolveIPv4(hostname) {
+  if (hostname === "smtp.gmail.com") {
+    try {
+      const res = await lookupAsync(hostname, 4);
+      if (res && res.address && !res.address.includes(":")) {
+        return res.address;
+      }
+    } catch (e) {
+      // Use official Google SMTP IPv4
+    }
+    return "142.251.10.108";
+  }
+
+  try {
+    const res = await lookupAsync(hostname, 4);
+    if (res && res.address && !res.address.includes(":")) {
+      return res.address;
+    }
+  } catch (err) {
+    console.warn(`[MAIL] IPv4 resolution failed for ${hostname}:`, err.message);
+  }
+  return hostname;
+}
+
 async function getTransporter() {
   if (transporter) {
     return transporter;
@@ -39,18 +63,11 @@ async function getTransporter() {
     return null;
   }
 
-  let hostToUse = config.host || "smtp.gmail.com";
-  try {
-    const lookupRes = await lookupAsync(hostToUse, { family: 4 });
-    if (lookupRes && lookupRes.address) {
-      cachedIpv4Host = lookupRes.address;
-    }
-  } catch (dnsErr) {
-    console.warn(`[DNS] IPv4 lookup warning for ${hostToUse}:`, dnsErr.message);
-  }
+  const rawHost = config.host || "smtp.gmail.com";
+  const targetHost = await resolveIPv4(rawHost);
 
   transporter = nodemailer.createTransport({
-    host: cachedIpv4Host || hostToUse,
+    host: targetHost,
     port: config.port || 587,
     secure: config.secure,
     auth: {
@@ -58,7 +75,7 @@ async function getTransporter() {
       pass: config.pass
     },
     tls: {
-      servername: config.host || "smtp.gmail.com",
+      servername: rawHost,
       rejectUnauthorized: false
     },
     connectionTimeout: 20000,
