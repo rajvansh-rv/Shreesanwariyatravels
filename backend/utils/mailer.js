@@ -31,25 +31,39 @@ function getTransporter() {
     return null;
   }
 
-  transporter = nodemailer.createTransport({
-    host: config.host,
-    port: config.port,
-    secure: config.secure,
-    auth: {
-      user: config.user,
-      pass: config.pass
-    },
-    tls: {
-      rejectUnauthorized: false
-    },
-    connectionTimeout: 15000,
-    greetingTimeout: 10000,
-    socketTimeout: 20000,
-    family: 4,
-    pool: true,
-    maxConnections: 3,
-    maxMessages: 50
-  });
+  const isGmail = config.host === "smtp.gmail.com" || config.user.toLowerCase().endsWith("@gmail.com");
+
+  if (isGmail) {
+    transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: config.user,
+        pass: config.pass
+      },
+      tls: {
+        rejectUnauthorized: false
+      },
+      connectionTimeout: 20000,
+      greetingTimeout: 15000,
+      socketTimeout: 30000
+    });
+  } else {
+    transporter = nodemailer.createTransport({
+      host: config.host,
+      port: config.port,
+      secure: config.secure,
+      auth: {
+        user: config.user,
+        pass: config.pass
+      },
+      tls: {
+        rejectUnauthorized: false
+      },
+      connectionTimeout: 20000,
+      greetingTimeout: 15000,
+      socketTimeout: 30000
+    });
+  }
 
   return transporter;
 }
