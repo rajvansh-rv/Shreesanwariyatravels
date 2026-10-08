@@ -19,6 +19,11 @@ let transporter = null;
 /**
  * Initialize reusable Nodemailer Transporter
  */
+const dns = require("dns");
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
+
 function getTransporter() {
   if (transporter) {
     return transporter;
@@ -31,39 +36,22 @@ function getTransporter() {
     return null;
   }
 
-  const isGmail = config.host === "smtp.gmail.com" || config.user.toLowerCase().endsWith("@gmail.com");
-
-  if (isGmail) {
-    transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: config.user,
-        pass: config.pass
-      },
-      tls: {
-        rejectUnauthorized: false
-      },
-      connectionTimeout: 20000,
-      greetingTimeout: 15000,
-      socketTimeout: 30000
-    });
-  } else {
-    transporter = nodemailer.createTransport({
-      host: config.host,
-      port: config.port,
-      secure: config.secure,
-      auth: {
-        user: config.user,
-        pass: config.pass
-      },
-      tls: {
-        rejectUnauthorized: false
-      },
-      connectionTimeout: 20000,
-      greetingTimeout: 15000,
-      socketTimeout: 30000
-    });
-  }
+  transporter = nodemailer.createTransport({
+    host: config.host || "smtp.gmail.com",
+    port: config.port || 465,
+    secure: config.secure,
+    auth: {
+      user: config.user,
+      pass: config.pass
+    },
+    tls: {
+      rejectUnauthorized: false
+    },
+    family: 4,
+    connectionTimeout: 20000,
+    greetingTimeout: 15000,
+    socketTimeout: 30000
+  });
 
   return transporter;
 }
